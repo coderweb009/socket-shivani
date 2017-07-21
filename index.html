@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="menu_overlay"></div>
+    <div class="main_box">
+        <div class="left_bar">
+            <div class="user">
+                <div class="uImg">
+                    <div class="circle_round" style="background: url(http://demandware.edgesuite.net.s1.frz.io/aafs_prd/on/demandware.static/-/Sites/en_US/dwa4865827/1-Clarins/01-Shop/500-Men/Men-ASpot.jpg?frz-v81) no-repeat;background-position: center center;background-size: cover;"></div>
+                    <div class="status_tag online"></div>
+                </div>
+                <div class="cont"><a href="#" data-html="true" data-placement="bottom" data-toggle="popover" data-content="
+		<ul class='logUl'>
+		<li><a href=''>Logout</a></li>
+		</ul>
+		">
+                    <h4>Prince Keshav <i class="fa fa-angle-down"></i></h4></a>
+                </div>
+            </div>
+            <div class="left_usersec" id="users">
+            </div>
+            <!-- left -->
+            <div class="bottom_search">
+                <input type="text" placeholder="Search" id="">
+                <button class="Search"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <div class="right_bar">
+            <div class="message_sec">
+                <div class="Other_user">
+                    <i class="fa fa-bars toggle"></i>
+                    <div class="left_sec_oth">
+                    </div>
+                    <!-- left -->
+                </div>
+                <!-- other -->
+                <div class="message_wrapper" id="messages">
+                
+  <div id="typing">Typing...</div>
+                </div>
+                <!-- wrapper -->
+            </div>
+            <!-- .message_sec -->
+            <div class="chat_ctrl">
+                <textarea name="" id="" placeholder="Type your message here...."></textarea>
+                <button type="button"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDUzNS41IDUzNS41IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MzUuNSA1MzUuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnIGlkPSJzZW5kIj4KCQk8cG9seWdvbiBwb2ludHM9IjAsNDk3LjI1IDUzNS41LDI2Ny43NSAwLDM4LjI1IDAsMjE2Ljc1IDM4Mi41LDI2Ny43NSAwLDMxOC43NSAgICIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+            </div>
+        </div>
+    </div>
+    <!-- main_box -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="js/niceScroll.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
+    var person = prompt("Please enter your name");
+
+    $(function() {
+
+        var socket = io();
+        socket.connect();
+
+        $('.user h4').text(person)
+ 
+        //setup before functions
+        var typingTimer; //timer identifier
+
+        var $input = $('textarea');
+        //on keyup, start the countdown
+        $input.on('keyup', function() {
+            socket.emit('typeout', true);
+        });
+
+        $('textarea').keydown(function(e) {
+
+            socket.emit('typing', person);
+
+            if (e.keyCode == 13) {
+                socket.emit('chat', { msg: $('textarea').val(), name: person });
+                $('textarea').val('')
+            }
+        })
+
+        $('.chat_ctrl button').click(function() {
+            socket.emit('chat', { msg: $('textarea').val(), name: person });
+            $('textarea').val('')
+        })
+
+
+
+        socket.on('newmsg', function(data) {
+            console.log(data)
+            var temp;
+            if (person == data.msg.name) {
+
+                temp = '<div class="message_item lf_msg">' +
+                    '<div class="circle_round" style="background: url(https://si.wsj.net/public/resources/images/WW-AA695_SANDBE_GR_20160923125605.jpg) no-repeat;background-position: center center;background-size: cover;"></div>' +
+                    '<div class="message">' +
+                    '<p>' + data.msg.msg + '</p>' +
+                    '</div>'
+                '<div class="time_to"><p> <i class="fa fa-clock-o" aria-hidden="true"></i> 7:30</p></div>' +
+                '</div><!-- msg -->';
+
+
+            } else {
+
+
+                temp = '<div class="message_item rg_msg">' +
+                    '<div class="circle_round" style="background: url(https://si.wsj.net/public/resources/images/WW-AA695_SANDBE_GR_20160923125605.jpg) no-repeat;background-position: center center;background-size: cover;"></div>' +
+                    '<div class="message">' +
+                    '<p>' + data.msg.name + '</p>' +
+                    '<p>' + data.msg.msg + '</p>' +
+                    '</div>'
+                '<div class="time_to"><p> <i class="fa fa-clock-o" aria-hidden="true"></i> 7:30</p></div>' +
+                '</div><!-- msg -->';
+
+
+
+            }
+
+            $('#messages').append(temp);
+        });
+
+        socket.on('typing', function(data) {
+            $('#typing').show();
+            console.log(data)
+ $('#typing').text(data + ' is Typing')
+        });
+
+
+        socket.on('typeout', function(data) {
+            clearInterval(typingTimer)
+            typingTimer = setTimeout(function() { $('#typing').hide(); }, 1000)
+        });
+
+    })
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.toggle').click(function() {
+            $('.left_bar').addClass('active');
+            $('.menu_overlay').fadeIn();
+        })
+
+        $('.menu_overlay').click(function() {
+            $('.left_bar').removeClass('active');
+            $('.menu_overlay').fadeOut();
+        })
+
+        $('.left_bar,.message_wrapper').niceScroll();
+        $('.left_usersec ').niceScroll();
+
+        $('[data-toggle="popover"]').popover();
+
+    })
+    </script>
+</body>
+
+</html>
